@@ -7,6 +7,11 @@
 </head>
 <body>
 <div id="app">
+        <label v-for="label in options">
+            <input type="radio"
+                v-model="current"
+                v-bind:value="label.value">{{ label.label }}
+        </label>
     <table>
     <!-- テーブルヘッダー -->
         <thead>
@@ -23,9 +28,11 @@
                 <th>{{ item.id }}</th>
                 <td>{{ item.comment }}</td>
                 <td class="state">
-                    <button>{{ item.state }}</button>
+                    <button v-on:click="doChangeState(item)">
+                        {{ item.state }}
+                    </button>
                 </td>
-                <td class="button" @click="delete">
+                <td class="button" @click.ctrl="doRemove(item)">
                     <button>削除</button>
                 </td>
             </tr>
@@ -35,10 +42,6 @@
     <form class="add-form" v-on:submit.prevent="doAdd"></form>
         コメント<input type="text" ref="comment">
         <button type="submit">Add</button>
-    <!-- 絞り込みラジオボタン -->
-    
-    <!-- ToDo テーブル -->
-    <!-- 新規登録フォーム -->
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script src="main.js"></script>

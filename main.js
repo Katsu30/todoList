@@ -19,9 +19,16 @@ var todoStorage = {
 
 const app = new Vue({
     el: '#app',
-    data : {
+    data: {
         todos : [],
-
+        options : [
+            { value: -1, label: 'すべて'},
+            { value: 0, label: '作業中'},
+            { value: 1, label: '完了'},
+        ],
+        // 選択している options の value を記憶するためのデータ
+        // 初期値を「-1」つまり「すべて」にする
+        current: -1
     },
     methods : {
         doAdd: function(event, value) {
@@ -45,5 +52,28 @@ const app = new Vue({
             // 入力後はフォームを空にする
             comment.value = ''
         }
+
+        doChangeState: function(item) {
+            item.state = item.state ? 0 : 1
+        },
+
+        doRemove: function(item) {
+            var index = this.todos.indexOf(item)
+            this.todos.splice(index, 1)
+        }
     },
+
+        created() {
+            // インスタンス作成時に自動的に fetch() する
+            this.todos = todoStorage.fetch()
+        },
+
+    watch: {
+        todos: {
+            handler: function(todos) {
+                todoStorage.save(todos)
+            },
+            deep : true
+        }
+    }
 })
