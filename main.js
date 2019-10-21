@@ -51,7 +51,7 @@ const app = new Vue({
 
             // 入力後はフォームを空にする
             comment.value = ''
-        }
+        },
 
         doChangeState: function(item) {
             item.state = item.state ? 0 : 1
