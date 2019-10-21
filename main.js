@@ -63,6 +63,21 @@ const app = new Vue({
         }
     },
 
+    computed: {
+        computedTodos: function(){
+            // データ current が -1 ならすべて
+            // それ以外なら current と state が一致するものだけに絞り込む
+            return this.todos.filter(function(el){
+                return this.current < 0 ? true : this.current === el.state
+            }, this)
+        },
+        labels() {
+            return this.options.reduce(function(a, b) {
+              return Object.assign(a, { [b.value]: b.label })
+            }, {})
+        },
+    },
+
         created() {
             // インスタンス作成時に自動的に fetch() する
             this.todos = todoStorage.fetch()

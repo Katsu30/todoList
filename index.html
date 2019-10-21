@@ -24,12 +24,12 @@
         </thead>
         <tbody>
             <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい -->
-            <tr v-for="item in todos" v-bind:key="item.id">
-                <th>{{ item.id }}</th>
+            <tr v-for="item in computedTodos" v-bind:key="item.id">
+                <th>{{ item.id + 1 }}</th>
                 <td>{{ item.comment }}</td>
                 <td class="state">
                     <button v-on:click="doChangeState(item)">
-                        {{ item.state }}
+                        {{ labels[item.state] }}
                     </button>
                 </td>
                 <td class="button" @click.ctrl="doRemove(item)">
@@ -39,9 +39,10 @@
         </tbody>
     </table>
     <h2>新しい作業の追加</h2>
-    <form class="add-form" v-on:submit.prevent="doAdd"></form>
+    <form class="add-form" v-on:submit.prevent="doAdd">
         コメント<input type="text" ref="comment">
         <button type="submit">Add</button>
+    </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="main.js"></script>
